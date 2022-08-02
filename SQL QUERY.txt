@@ -1,0 +1,23 @@
+CREATE TABLE Customers
+(
+	Id int primary key identity(1, 1) NOT NULL,
+	[Name] nvarchar(50) NOT NULL
+)
+
+INSERT INTO Customers([Name])
+VALUES ('Max'),('Pavel'),('Ivan'),('Leonid')
+----------------------------------------------------
+CREATE TABLE [Orders]
+(
+	Id int primary key identity(1, 1) NOT NULL,
+	CustomerId int foreign key REFERENCES dbo.Customers(Id) NOT NULL
+)
+
+INSERT INTO Orders(CustomerId)
+VALUES (2),(4)
+----------------------------------------------------
+SELECT c.[Name] 
+FROM dbo.Orders as o
+FULL JOIN dbo.Customers as c 
+ON c.Id = o.CustomerId
+WHERE o.CustomerId IS NULL
